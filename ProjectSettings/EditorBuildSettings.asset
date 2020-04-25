@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
+    path: Assets/Menu.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Ezra's/Scenes/Click.unity
+    guid: b3a3a1546f322bd42a946939ef5ad2be
+  - enabled: 0
+    path: Assets/Ezra's/Scenes/Reflect.unity
+    guid: 3bad9121a4066cf448ce08354b084c3b
   m_configObjects: {}
