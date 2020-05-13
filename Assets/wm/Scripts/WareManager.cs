@@ -14,6 +14,8 @@ public class WareManager : MonoBehaviour
     private int wins = 0;
     private int loss = 0;
 
+    private int numScenes;
+
     void Start()
     {
         DontDestroyOnLoad(this.gameObject);
@@ -22,6 +24,7 @@ public class WareManager : MonoBehaviour
             lives.GetChild(i).gameObject.SetActive(true);
         }
         WinText.text = "Games Won: 0";
+        numScenes = SceneManager.sceneCountInBuildSettings;
     }
 
     public void StartGame()
@@ -51,7 +54,7 @@ public class WareManager : MonoBehaviour
         SceneManager.LoadScene("Transition");
         WinText.text = "Games Won: " + wins;
         yield return new WaitForSeconds(2f);
-        SceneManager.LoadScene("Prototype");
+        SceneManager.LoadScene(Random.Range(2,numScenes));
     }
     
 }

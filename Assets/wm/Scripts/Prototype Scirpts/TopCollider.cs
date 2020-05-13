@@ -11,6 +11,7 @@ public class TopCollider : MonoBehaviour
     {
         wm = GameObject.FindGameObjectWithTag("GameController").GetComponent<WareManager>();
     }
+    
     private void OnTriggerEnter(Collider other)
     {
         if (success)
