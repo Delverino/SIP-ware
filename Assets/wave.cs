@@ -46,7 +46,11 @@ public class wave : MonoBehaviour
         for (int i = 0; i < numPoints; i++)
         {
             float x = i * grain * mult;// * Mathf.Sign(mouse.transform.position.x);
-            float y = Mathf.Sin(  (x * Mathf.Clamp(6 / Mathf.Abs(mouse.transform.position.x), min, max) ) )* mouse.transform.position.y;
+
+            float normalized = Mathf.Abs(((Mathf.Abs(mouse.transform.position.x) % 20) - 10) / 10);
+            float frequency = Mathf.Lerp(min, max, normalized);
+
+            float y = Mathf.Sin(x * frequency) * mouse.transform.position.y;
             points[i] = new Vector3(x, y + start.y, 0);
             if(i == numPoints - 1)
             {
