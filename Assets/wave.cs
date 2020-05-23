@@ -13,6 +13,9 @@ public class wave : MonoBehaviour
     public float grain;
     public float length;
 
+    public float min;
+    public float max;
+
     public GameObject mouse;
 
     int numPoints;
@@ -31,16 +34,16 @@ public class wave : MonoBehaviour
     {
         start = Vector3.Lerp(Vector3.zero, mouse.transform.position, 0.2f);
 
-        length = 10 * Mathf.Abs(mouse.transform.position.x);
+        //length = 10 * Mathf.Abs(mouse.transform.position.x);
 
         numPoints = (int)(length / grain);
         points = new Vector3[numPoints];
-        
-        for(int i = 0; i < numPoints; i++)
+
+        for (int i = 0; i < numPoints; i++)
         {
-            float x = i * grain * mult * Mathf.Sign(mouse.transform.position.x);
-            float y = Mathf.Sin((6 * x) / Mathf.Abs(mouse.transform.position.x)) * mouse.transform.position.y;
-            points[i] = new Vector3(x + start.x, y + start.y, 0);
+            float x = i * grain * mult;// * Mathf.Sign(mouse.transform.position.x);
+            float y = Mathf.Sin(  (x * Mathf.Clamp(6 / Mathf.Abs(mouse.transform.position.x), min, max) ) )* mouse.transform.position.y;
+            points[i] = new Vector3(x, y + start.y, 0);
         }
 
         line.positionCount = numPoints;
