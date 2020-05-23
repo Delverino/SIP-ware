@@ -52,7 +52,7 @@ public class wave : MonoBehaviour
 
             float y = Mathf.Sin(x * frequency) * mouse.transform.position.y;
             points[i] = new Vector3(x, y + start.y, 0);
-            if(i == numPoints - 1)
+            if(i == numPoints - 1 && hand != null)
             {
                 hand.position = points[i] + transform.position + translation;
             }
