@@ -22,6 +22,10 @@ public class wave : MonoBehaviour
 
     public int mult;
 
+    public Transform hand;
+
+    public Vector3 translation;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,6 +48,10 @@ public class wave : MonoBehaviour
             float x = i * grain * mult;// * Mathf.Sign(mouse.transform.position.x);
             float y = Mathf.Sin(  (x * Mathf.Clamp(6 / Mathf.Abs(mouse.transform.position.x), min, max) ) )* mouse.transform.position.y;
             points[i] = new Vector3(x, y + start.y, 0);
+            if(i == numPoints - 1)
+            {
+                hand.position = points[i] + transform.position + translation;
+            }
         }
 
         line.positionCount = numPoints;
