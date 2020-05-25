@@ -25,10 +25,9 @@ public class ConstellationDrawer : MonoBehaviour
         if (completed) { return; }
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        ray.direction *= 100f;
         Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 200f)) {
+        if (Physics.Raycast(ray, out hit)) {
             Star star = hit.transform.gameObject.GetComponent<Star>();
             if (star)
             {
@@ -65,9 +64,7 @@ public class ConstellationDrawer : MonoBehaviour
         Vector3 mousePos = Input.mousePosition;
         mousePos.z = transform.localPosition.z;
         mousePos = Camera.main.ScreenToWorldPoint(mousePos);
-        Debug.DrawLine(Camera.main.transform.position, mousePos, Color.cyan);
         mousePos = transform.InverseTransformPoint(mousePos);
-        Debug.Log($"{Input.mousePosition}, {mousePos}");
         SetLastLinePoint(mousePos);
     }
 
