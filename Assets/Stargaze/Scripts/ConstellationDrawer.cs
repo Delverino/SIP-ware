@@ -9,6 +9,9 @@ public class ConstellationDrawer : MonoBehaviour
     private Star previous = null;
     private Constellation constellation = null;
     private LineRenderer line = null;
+    private bool completed = false;
+
+    public Color completedLineColor;
 
     void Awake()
     {
@@ -19,6 +22,8 @@ public class ConstellationDrawer : MonoBehaviour
     }
 
     void FixedUpdate() {
+        if (completed) { return; }
+
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit)) {
@@ -39,13 +44,16 @@ public class ConstellationDrawer : MonoBehaviour
                     constellation.AddEdge(previous, star);
                     SetLastLinePoint(star.transform.position);
                     line.positionCount += 1;
+                    star.Activate();
 
                     // If this edge completes the constellation, give visual indication
                     if (constellation.IsComplete()) {
-                        line.startColor = Color.blue;
-                        line.endColor = Color.blue;
+                        completed = true;
+                        line.positionCount -= 1;
+                        line.startColor = completedLineColor;
+                        line.endColor = completedLineColor;
+                        return;
                     }
-                    star.Activate();
                 }
                 previous = star;
             }
