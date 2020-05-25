@@ -3,12 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(BoxCollider))]
 public class Constellation : MonoBehaviour
 {
     private Graph<Star> stars = new Graph<Star>(false, false);
 
+    public Bounds bounds;
+
     void Awake()
     {
+        bounds = GetComponent<BoxCollider>().bounds;
+
         foreach (Star star in GetComponentsInChildren<Star>())
         {
             Node<Star> node = stars.AddNode(star);
