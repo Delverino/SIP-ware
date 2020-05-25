@@ -854,6 +854,8 @@ MonoBehaviour:
   numberOfStars: 10
   starPrefab: {fileID: 1347616517853838914, guid: 00c256e57541c0a42b8c0ea8b5926388,
     type: 3}
+  cloudPrefab: {fileID: 2340450913520760177, guid: 1283ae3743fac4945876d7a9b70fbd96,
+    type: 3}
 --- !u!4 &892742142
 Transform:
   m_ObjectHideFlags: 0
