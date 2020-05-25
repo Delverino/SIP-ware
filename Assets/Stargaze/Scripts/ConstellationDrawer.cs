@@ -30,25 +30,23 @@ public class ConstellationDrawer : MonoBehaviour
                 {
                     SetLastLinePoint(star.transform.position);
                     line.positionCount += 1;
+                    star.Activate();
                 }
                 // For rest of stars, add point to line if star was not the previous star
                 // Additionally, add edge to graph structure for checking completion
-                else
+                else if(star != previous)
                 {
-                    if (star != previous) 
-                    {
-                        constellation.AddEdge(previous, star);
-                        SetLastLinePoint(star.transform.position);
-                        line.positionCount += 1;
+                    constellation.AddEdge(previous, star);
+                    SetLastLinePoint(star.transform.position);
+                    line.positionCount += 1;
 
-                        // If this edge completes the constellation, give visual indication
-                        if (constellation.IsComplete()) {
-                            line.startColor = Color.blue;
-                            line.endColor = Color.blue;
-                        }
+                    // If this edge completes the constellation, give visual indication
+                    if (constellation.IsComplete()) {
+                        line.startColor = Color.blue;
+                        line.endColor = Color.blue;
                     }
+                    star.Activate();
                 }
-                star.Activate();
                 previous = star;
             }
         }
