@@ -21,12 +21,10 @@ public class Star : MonoBehaviour
         scaleSequence = DOTween.Sequence();
         scaleSequence.Append(transform.DOScale(transform.localScale * animationScale, animationDuration / 2f));
         scaleSequence.Append(transform.DOScale(transform.localScale, animationDuration / 2f));
-        Debug.Log(scaleSequence.Duration());
 
         animationSequence = DOTween.Sequence();
         animationSequence.Append(scaleSequence);
         animationSequence.Join(transform.DORotate(new Vector3(0.0f, 0.0f, 360.0f), animationDuration, RotateMode.LocalAxisAdd));
-        Debug.Log(animationSequence.Duration());
     }
 
     public void Activate()
@@ -40,5 +38,10 @@ public class Star : MonoBehaviour
         }
 
         animationSequence.Play();
+    }
+
+    void OnDisable()
+    {
+        animationSequence.Kill();
     }
 }
