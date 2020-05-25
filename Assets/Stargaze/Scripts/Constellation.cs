@@ -2,17 +2,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
-[RequireComponent(typeof(BoxCollider))]
 public class Constellation : MonoBehaviour
 {
     private Graph<Star> stars = new Graph<Star>(false, false);
 
-    public Bounds bounds;
+    public Bounds starBounds;
+    public uint numberOfStars;
+    public GameObject starPrefab;
 
     void Awake()
     {
-        bounds = GetComponent<BoxCollider>().bounds;
+        Debug.Log(starBounds.extents);
+
+        for (int ii = 0; ii < numberOfStars; ii++)
+        {
+            Vector3 randomPoint = new Vector3(
+                Random.Range(starBounds.min.x, starBounds.max.x),
+                Random.Range(starBounds.min.y, starBounds.max.y),
+                0.0f);
+
+            GameObject instance = Instantiate(starPrefab, transform);
+            instance.transform.localPosition = randomPoint;
+        }
 
         foreach (Star star in GetComponentsInChildren<Star>())
         {

@@ -34,7 +34,7 @@ public class Star : MonoBehaviour
         MeshRenderer mesh = GetComponent<MeshRenderer>();
         if (mesh)
         {
-            mesh.material.color = Color.blue;
+            mesh.material.SetColor("_EmissionColor", mesh.material.GetColor("_EmissionColor") * 1.3f);
         }
 
         animationSequence.Play();

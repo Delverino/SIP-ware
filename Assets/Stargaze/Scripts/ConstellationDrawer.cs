@@ -10,8 +10,10 @@ public class ConstellationDrawer : MonoBehaviour
     private Constellation constellation = null;
     private LineRenderer line = null;
     private bool completed = false;
+    private uint activatedCount = 0;
 
     public Color completedLineColor;
+    private Color initialLineColor;
 
     void Awake()
     {
@@ -19,6 +21,7 @@ public class ConstellationDrawer : MonoBehaviour
         line = GetComponent<LineRenderer>();
         line.positionCount = 1;
         line.SetPosition(line.positionCount - 1, Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        initialLineColor = line.startColor;
     }
 
     void FixedUpdate() {
@@ -34,25 +37,19 @@ public class ConstellationDrawer : MonoBehaviour
                 // For first star hovered, just add it as first point in the line
                 if (!previous) 
                 {
-                    SetLastLinePoint(star.transform.localPosition);
-                    line.positionCount += 1;
-                    star.Activate();
+                    ActivateStar(star);
                 }
                 // For rest of stars, add point to line if star was not the previous star
                 // Additionally, add edge to graph structure for checking completion
                 else if(star != previous)
                 {
                     constellation.AddEdge(previous, star);
-                    SetLastLinePoint(star.transform.localPosition);
-                    line.positionCount += 1;
-                    star.Activate();
+                    ActivateStar(star);
 
                     // If this edge completes the constellation, give visual indication
                     if (constellation.IsComplete()) {
                         completed = true;
-                        line.positionCount -= 1;
-                        line.startColor = completedLineColor;
-                        line.endColor = completedLineColor;
+                        line.positionCount--;
                         return;
                     }
                 }
@@ -66,6 +63,20 @@ public class ConstellationDrawer : MonoBehaviour
         mousePos = Camera.main.ScreenToWorldPoint(mousePos);
         mousePos = transform.InverseTransformPoint(mousePos);
         SetLastLinePoint(mousePos);
+    }
+
+    private void ActivateStar(Star star)
+    {
+        SetLastLinePoint(star.transform.localPosition);
+        line.positionCount++;
+
+        star.Activate();
+        activatedCount++;
+
+        Color lineColor = Color.Lerp(initialLineColor, completedLineColor,
+            (float)activatedCount / constellation.numberOfStars);
+        line.startColor = lineColor;
+        line.endColor = lineColor;
     }
 
     private void SetLastLinePoint(Vector3 point)
