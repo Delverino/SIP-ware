@@ -23,6 +23,11 @@ public class Constellation : MonoBehaviour
 
     public void AddEdge(Star from, Star to)
     {
+        stars.AddEdge(stars.Nodes[from.index], stars.Nodes[to.index]);
+    }
 
+    public bool IsComplete()
+    {
+        return stars.IsConnected();
     }
 }

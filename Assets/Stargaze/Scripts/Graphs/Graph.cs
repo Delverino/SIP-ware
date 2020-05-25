@@ -78,8 +78,7 @@ public class Graph<T>
                 Edge<T> edge = new Edge<T>() {
                     From = from,
                     To = from.Neighbors[i],
-                    Weight = i < from.Weights.Count
-                        ? from.Weights[i] : 0
+                    Weight = i < from.Weights.Count ? from.Weights[i] : 0
                 };
                 edges.Add(edge);
             }
@@ -92,6 +91,27 @@ public class Graph<T>
         return Nodes.ConvertAll(NodeToData);
     }
 
+    public List<Node<T>> DFS() {
+        bool[] isVisited = new bool[Nodes.Count];
+        List<Node<T>> result = new List<Node<T>>();
+        DFS(isVisited, Nodes[0], result);
+        return result;
+    }
+
+    public bool IsConnected()
+    {
+        bool[] isVisited = new bool[Nodes.Count];
+        List<Node<T>> result = new List<Node<T>>();
+        DFS(isVisited, Nodes[0], result);
+
+        foreach (bool visited in isVisited)
+        {
+            if (!visited) { return false; }
+        }
+
+        return true;
+    }
+
     // Private Methods
     private void UpdateIndices() {
         int i = 0;
@@ -101,5 +121,16 @@ public class Graph<T>
     private static T NodeToData(Node<T> node)
     {
         return node.Data;
+    }
+
+    private void DFS(bool[] isVisited, Node<T> node, List<Node<T>> result) {
+        result.Add(node);
+        isVisited[node.Index] = true;
+
+        foreach (Node<T> neighbor in node.Neighbors) {
+            if (!isVisited[neighbor.Index]) {
+                DFS(isVisited, neighbor, result);
+            }
+        }
     }
 }

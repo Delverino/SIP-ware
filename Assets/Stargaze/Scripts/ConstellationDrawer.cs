@@ -40,6 +40,12 @@ public class ConstellationDrawer : MonoBehaviour
                         constellation.AddEdge(previous, star);
                         SetLastLinePoint(star.transform.position);
                         line.positionCount += 1;
+
+                        // If this edge completes the constellation, give visual indication
+                        if (constellation.IsComplete()) {
+                            line.startColor = Color.blue;
+                            line.endColor = Color.blue;
+                        }
                     }
                 }
                 star.Activate();
