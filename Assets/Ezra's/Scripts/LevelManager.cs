@@ -13,7 +13,6 @@ public class LevelManager : MonoBehaviour
     void Start()
     {
         numScenes = SceneManager.sceneCountInBuildSettings;
-        Debug.Log(numScenes);
         Instance = this;
     }
 

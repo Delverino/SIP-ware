@@ -8,6 +8,7 @@ public class Constellation : MonoBehaviour
 {
     private Graph<Star> stars = new Graph<Star>(false, false);
 
+    public float duration;
     public Bounds starBounds;
     public uint numberOfStars;
     public GameObject starPrefab;
@@ -15,9 +16,7 @@ public class Constellation : MonoBehaviour
 
     void Awake()
     {
-        Debug.Log(starBounds.extents);
-        
-        int numberOfClouds = Random.Range(12,15);
+        int numberOfClouds = Random.Range(12, 15);
         for (int ii = 0; ii < numberOfClouds; ii++)
         {
             Vector3 randomPoint = new Vector3(
@@ -47,6 +46,19 @@ public class Constellation : MonoBehaviour
         }
     }
 
+    void FixedUpdate()
+    {
+        if (Time.timeSinceLevelLoad >= duration)
+        {
+            foreach (Cloud cloud in GetComponentsInChildren<Cloud>())
+            {
+                cloud.StartMoving();
+            }
+
+            Invoke("LoadNextLevel", 2f);
+        }
+    }
+
     public List<Star> GetStars()
     {
         return stars.GetData();
@@ -60,5 +72,10 @@ public class Constellation : MonoBehaviour
     public bool IsComplete()
     {
         return stars.IsConnected();
+    }
+
+    private void LoadNextLevel()
+    {
+        LevelManager.Instance.done();
     }
 }
