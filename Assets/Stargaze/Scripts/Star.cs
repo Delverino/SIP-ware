@@ -37,7 +37,7 @@ public class Star : MonoBehaviour
             mesh.material.SetColor("_EmissionColor", mesh.material.GetColor("_EmissionColor") * 1.3f);
         }
 
-        animationSequence.Play();
+        animationSequence.Restart();
     }
 
     void OnDisable()

@@ -50,6 +50,11 @@ public class ConstellationDrawer : MonoBehaviour
                     if (constellation.IsComplete()) {
                         completed = true;
                         line.positionCount--;
+
+                        foreach (Star s in constellation.GetStars())
+                        {
+                            s.Activate();
+                        }
                         return;
                     }
                 }
